@@ -36,10 +36,33 @@ For example the english one is located at the following location :
 
 Mnemonic wordlist location: https://github.com/monero-project/monero/blob/master/src/mnemonics/english.h#L56
 
+and also :
+https://github.com/monero-ecosystem/monero-python/blob/master/monero/wordlists/english.py
+
+The original implementaion for reference in helper functions:
+https://github.com/monero-project/mininero/blob/master/mnemonic.py
+
 
 There is a variable named "words". These array of words is what the monero software uses internally to generate seed phrases.
 
 
 ### Creating a offline wordlist dictionary
 
-The seed phrase is an encoded
+TODO: Add instructions for building an offline wordlist dictionary.
+
+
+
+
+### MoneroSeedQR
+
+25 word mnemonic seed phrase is:
+
+```
+25 words * 4 digits per word = 100 digits
+```
+
+This is the same as the Monero core wallet.
+
+The 25 words correspond to a 256-bit interger which is the account's "private spend key".
+The Private view key is derived by hashing the private spend key with Keccak-256.
+The public keys are then derived from the private keys.
