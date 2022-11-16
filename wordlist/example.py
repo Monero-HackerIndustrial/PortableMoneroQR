@@ -22,7 +22,7 @@ def cn_fast_hash(hex):
     keccak_hash.update(bytearray.fromhex(hex))
     return keccak_hash.hexdigest()
 
-
+#1026 875 ridges
 p = Seed("owls moat ridges weird obedient itself orbit grunt nagged eldest piloted update twice hunter apart dwarf pumpkins ramped gags dyslexic dolphin happens swiftly trying dyslexic")
 
 hex = p.hex
