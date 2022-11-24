@@ -6,12 +6,12 @@ FILENAME = "transaction/unsigned_monero_tx"
 #Eventually we need to subtract the auillary frame metadata from this to get the effective payload size
 LIMITS = {}
 #limit for 25x25
-LIMITS["25"] = 32
+LIMITS["25"] = 32 #version 2
 LIMITS["29"] = 53
-LIMITS["29"] = 78
-LIMITS["37"] = 106
-LIMITS["53"] = 230
-LIMITS["177"] = 2953
+LIMITS["33"] = 78
+LIMITS["37"] = 106 #v5
+LIMITS["53"] = 230 #v6
+LIMITS["177"] = 2953 #v7
 
 
 #function to break down number of frames needed
