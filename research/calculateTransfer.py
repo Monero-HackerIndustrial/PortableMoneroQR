@@ -20,26 +20,37 @@ QRLIMITS["7"] = 2953 #v7  177x177
 
 
 LIMIT = QRLIMITS[str(QRVERSION)] - METADATA_SIZE
+# LIMIT = 2000
 
 #function to break down number of frames needed
 def calcNumFrames(_dataSize, _frameSize):
     return (_dataSize // _frameSize) + (1 if (( _dataSize % _frameSize) > 0)  else 0)
 
 def createFrame(_data, _frameSize):
-    sizeIN = len(_data)
-    framesNeeded = calcNumFrames(sizeIN, LIMIT)
     fullData = memoryview(_data).cast('c')
+    # sizeIN = len(_data)
+    sizeIN = len(fullData)
+    framesNeeded = calcNumFrames(sizeIN, LIMIT)
+
     for x in range(0,framesNeeded):
         start = x * _frameSize
         stop = start + _frameSize
         dataSlice = bytes(fullData[start:stop])
         dataSlice = base64.b64encode(dataSlice).decode('ascii')
         frame = {
-        "index" : start,
+        "index" : x,
         "total" : framesNeeded,
         "data" :  dataSlice
         }
         print(json.dumps(frame))
+        qr = qrcode.QRCode(
+            version=7,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        img = qrcode.make(frame)
+        img.save(f"outputImg/{x}.png")
 
 
 (1 if (True) > 0  else 0)
