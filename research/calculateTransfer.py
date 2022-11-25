@@ -19,8 +19,8 @@ QRLIMITS["6"] = 230 #v6 53x53
 QRLIMITS["7"] = 2953 #v7  177x177
 
 
-LIMIT = QRLIMITS[str(QRVERSION)] - METADATA_SIZE
-# LIMIT = 2000
+# LIMIT = QRLIMITS[str(QRVERSION)] - METADATA_SIZE
+LIMIT = 1000
 
 #function to break down number of frames needed
 def calcNumFrames(_dataSize, _frameSize):
@@ -30,13 +30,17 @@ def createFrame(_data, _frameSize):
     fullData = memoryview(_data).cast('c')
     # sizeIN = len(_data)
     sizeIN = len(fullData)
-    framesNeeded = calcNumFrames(sizeIN, LIMIT)
+    print(f"size of tx {sizeIN}")
+    framesNeeded = calcNumFrames(sizeIN, _frameSize)
+    print(f"frames needed {framesNeeded}")
+    print(f"limit needed {_frameSize}")
 
     for x in range(0,framesNeeded):
         start = x * _frameSize
         stop = start + _frameSize
         dataSlice = bytes(fullData[start:stop])
         dataSlice = base64.b64encode(dataSlice).decode('ascii')
+        print(f"On slice {x} size of data {len(dataSlice)}")
         frame = {
         "index" : x,
         "total" : framesNeeded,
@@ -60,7 +64,9 @@ with open(FILENAME, mode='rb') as file:
 
 #the size of the transaction in bytes
 
-sizeIN = len(unsignedTX)
+# sizeIN = len(unsignedTX)
+sizeIN = len(base64.b64encode(unsignedTX).decode('ascii'))
+print(f"size in {sizeIN}")
 
 
 framesNeeded = calcNumFrames(sizeIN, LIMIT)
